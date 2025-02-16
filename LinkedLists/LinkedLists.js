@@ -18,14 +18,14 @@ a.next = b;
 b.next = c;
 c.next = d;
 
-let n1 = new Node(4);
-let n2 = new Node(16);
-let n3 = new Node(3);
-let n4 = new Node(75);
+// let n1 = new Node(4);
+// let n2 = new Node(16);
+// let n3 = new Node(3);
+// let n4 = new Node(75);
 
-n1.next = n2;
-n2.next = n3;
-n3.next = n4;
+// n1.next = n2;
+// n2.next = n3;
+// n3.next = n4;
 
 // Method - Iterative: Print values from the linked list
 const printLinkedList = (head) => {
@@ -339,16 +339,119 @@ const improvedRecursiveReverseLinkedList = (head, prev = null) => {
   return improvedRecursiveReverseLinkedList(next, head);
 };
 
-let node1 = new Node("A");
-let node2 = new Node("B");
-let node3 = new Node("C");
-let node4 = new Node("D");
+// let node1 = new Node("A");
+// let node2 = new Node("B");
+// let node3 = new Node("C");
+// let node4 = new Node("D");
 
-node1.next = node2;
-node2.next = node3;
-node3.next = node4;
+// node1.next = node2;
+// node2.next = node3;
+// node3.next = node4;
 
-// console.log(improvedRecursiveReverseLinkedList(node1));
-console.log(printLinkedList(improvedRecursiveReverseLinkedList(node1)));
-console.log(node2);
-console.log(node1);
+// // console.log(improvedRecursiveReverseLinkedList(node1));
+// console.log(printLinkedList(improvedRecursiveReverseLinkedList(node1)));
+// console.log(node2);
+// console.log(node1);
+
+// Method - Iterative - Zip together 2 linked lists in an alternating pattern. Lists can be of variable size
+// Complexity: Time - O(min(n, m)) ; Space - O(1)
+
+const zip = (h1, h2) => {
+  let c1 = h1;
+  let c2 = h2;
+
+  while (c1 != null && c2 != null) {
+    let next1 = c1.next;
+    let next2 = c2.next;
+
+    c1.next = c2;
+    if (next1 != null) {
+      c2.next = next1;
+    }
+
+    c1 = next1;
+    c2 = next2;
+  }
+
+  return h1;
+};
+
+// Method - Iterative - Better Solution from Video: Zip together 2 linked lists in an alternating pattern. Lists can be of variable size
+// Complexity: Time - O(min(n, m)) ; Space - O(1)
+
+const zipper = (h1, h2) => {
+  let tail = h1;
+  let c1 = h1.next;
+  let c2 = h2;
+  let count = 0;
+
+  while (c1 != null && c2 != null) {
+    if (count % 2 == 0) {
+      tail.next = c2;
+      c2 = c2.next;
+    } else {
+      tail.next = c1;
+      c1 = c1.next;
+    }
+    tail = tail.next;
+    count += 1;
+  }
+
+  if (c1 != null) tail.next = c1;
+  if (c2 != null) tail.next = c2;
+
+  return h1;
+};
+
+// Scenario 1:
+// let na = new Node("A");
+// let nb = new Node("B");
+// let nc = new Node("C");
+// let nd = new Node("D");
+
+// na.next = nb;
+// nb.next = nc;
+// nc.next = nd;
+
+// let n1 = new Node("1");
+// let n2 = new Node("2");
+// let n3 = new Node("3");
+// let node4 = new Node("4");
+
+// n1.next = n2;
+// n2.next = n3;
+// n3.next = node4;
+
+// Scenario 2:
+// let na = new Node("A");
+// let nb = new Node("B");
+// let nc = new Node("C");
+// let nd = new Node("D");
+
+// na.next = nb;
+// nb.next = nc;
+// nc.next = nd;
+
+// let n1 = new Node("1");
+// let n2 = new Node("2");
+
+// n1.next = n2;
+
+// Scenario 3:
+// let na = new Node("A");
+// let nb = new Node("B");
+
+// na.next = nb;
+
+// let n1 = new Node("1");
+// let n2 = new Node("2");
+// let n3 = new Node("3");
+// let node4 = new Node("4");
+
+// n1.next = n2;
+// n2.next = n3;
+// n3.next = node4;
+
+// zip(na, n1);
+zipper(na, n1);
+printLinkedList(na);
