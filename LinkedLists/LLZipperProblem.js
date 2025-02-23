@@ -1,4 +1,4 @@
-import { Node, printLinkedList } from "./listCommon.js";
+import { Node, printLinkedList } from "./LLCommon.js";
 
 // Linked Lists - Zipper Problem: Zip together 2 linked lists in an alternating pattern. Lists can be of variable size.
 
@@ -54,7 +54,6 @@ n33.next = n34;
 
 // Method - Iterative - First Attempt. Misses some edge cases:
 // Complexity: Time - O(min(n, m)) ; Space - O(1)
-
 const zip = (h1, h2) => {
   let c1 = h1;
   let c2 = h2;
@@ -75,9 +74,8 @@ const zip = (h1, h2) => {
   return h1;
 };
 
-// Method - Iterative - Better Solution from Video: Zip together 2 linked lists in an alternating pattern. Lists can be of variable size
+// Method - Iterative - Better Solution from Video
 // Complexity: Time - O(min(n, m)) ; Space - O(1)
-
 const zipper = (h1, h2) => {
   let tail = h1;
   let c1 = h1.next;
@@ -102,6 +100,21 @@ const zipper = (h1, h2) => {
   return h1;
 };
 
+// Method - Recursive - Solution from Video
+// Complexity: Time - O(min(n, m)) ; Space - O(n)
+const recursiveZip = (h1, h2) => {
+  if (h1 == null && h2 == null) return null;
+  if (h1 == null) return h2;
+  if (h2 == null) return h1;
+
+  const next1 = h1.next;
+  const next2 = h2.next;
+
+  h1.next = h2;
+  h2.next = recursiveZip(next1, next2);
+  return h1;
+};
+
 // Test Method 1:
 // console.log("First Scenario: ");
 // zip(n1a, n11);
@@ -116,14 +129,27 @@ const zipper = (h1, h2) => {
 // printLinkedList(n3a);
 
 // Test Method 2:
+// console.log("First Scenario: ");
+// zipper(n1a, n11);
+// printLinkedList(n1a);
+
+// console.log("Second Scenario: ");
+// zipper(n2a, n21);
+// printLinkedList(n2a);
+
+// console.log("Third Scenario: ");
+// zipper(n3a, n31);
+// printLinkedList(n3a);
+
+// Test Method 3:
 console.log("First Scenario: ");
-zipper(n1a, n11);
+recursiveZip(n1a, n11);
 printLinkedList(n1a);
 
 console.log("Second Scenario: ");
-zipper(n2a, n21);
+recursiveZip(n2a, n21);
 printLinkedList(n2a);
 
 console.log("Third Scenario: ");
-zipper(n3a, n31);
+recursiveZip(n3a, n31);
 printLinkedList(n3a);
